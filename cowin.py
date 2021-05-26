@@ -4,6 +4,7 @@ import time
 import json
 import sys
 from datetime import date
+from playsound import playsound
 
 url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=389&date="
 
@@ -35,5 +36,6 @@ while(True):
             if session['available_capacity_dose1'] != 0:
                 print("Center: " + center['name'] + "    \n\tPINCODE " +  str(center['pincode']) + " Age limit " + str(session['min_age_limit']) + " Address : " + center['address'] )
                 slots = 1
+                playsound('sound.mp3')
     if slots == 0:
         print("No slots for dose 1")
