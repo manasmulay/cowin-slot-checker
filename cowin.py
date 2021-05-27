@@ -3,10 +3,21 @@ import random
 import time
 import json
 import sys
+from twilioCreds import *
 from datetime import date
 from playsound import playsound
+from twilio.rest import Client
 
 url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=389&date="
+
+# client credentials are read from TWILIO_ACCOUNT_SID and AUTH_TOKEN
+client = Client(TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN)
+
+# this is the Twilio sandbox testing number
+from_whatsapp_number='whatsapp:' + FROM_WHATSAPP_NUMBER
+# replace this number with your own WhatsApp Messaging number
+to_whatsapp_number='whatsapp:' + TO_WHATSAPP_NUMBER
+
 
 payload={}
 headers = {
@@ -37,5 +48,8 @@ while(True):
                 print("Center: " + center['name'] + "    \n\tPINCODE " +  str(center['pincode']) + " Age limit " + str(session['min_age_limit']) + " Address : " + center['address'] )
                 slots = 1
                 playsound('sound.mp3')
+                client.messages.create(body="Found COVID vaccine slot in " + "Center: " + center['name'] + "    \n\tPINCODE " +  str(center['pincode']) + " Age limit " + str(session['min_age_limit']) + " Address : " + center['address'],
+                       from_=from_whatsapp_number,
+                       to=to_whatsapp_number)
     if slots == 0:
         print("No slots for dose 1")
