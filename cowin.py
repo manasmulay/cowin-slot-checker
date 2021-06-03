@@ -8,6 +8,8 @@ from datetime import date
 from playsound import playsound
 from twilio.rest import Client
 
+excluePin = [424109, 423204]
+
 def getSearchCriteria():
   print("Enter")
   print("1. Search by district")
@@ -72,7 +74,7 @@ def main(data,criteria):
       slots = 0
       for center in res['centers']:
           for session in center['sessions']:
-              if session['available_capacity_dose1'] != 0:
+              if session['available_capacity_dose1'] != 0 and center['pincode'] not in excluePin:
                   print("Center: " + center['name'] + "    \n\tPINCODE " +  str(center['pincode']) + " Age limit " + str(session['min_age_limit']) + " Address : " + center['address'] )
                   slots = 1
                   playsound('sound.mp3')
