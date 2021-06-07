@@ -2,6 +2,7 @@
 ```
 pip install playsound
 pip install twilio
+pip install requests
 ```
 
 # Running
